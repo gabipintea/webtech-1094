@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            window.onload = () => {
+                const city = document.getElementById('city')
+                const getSpeedBtn = document.getElementById('getSpeedBtn')
+                const wind = document.getElementById('wind')
+
+                getSpeedBtn.onclick = async() => {
+                    try {
+                        const response = await fetch(`http://localhost:8080/weather/?city=${city.value}`)
+                        const responseContent = await response.json()
+                        wind.innerHTML = responseContent.properties.vant
+                    } catch(err) {
+                        console.warn(err)
+                    }
+
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <input type="text" id="city" />
+        <input type="button" value="wind speed" id="getSpeedBtn">
+        <div id="wind"></div>
+    </body>
+</html>

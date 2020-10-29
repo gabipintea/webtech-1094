@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            // hardcoded employees
+            // const employees = [{
+            //         employee_name: 'john',
+            //         employee_age: 33,
+            //         employee_salary: 1000
+            //     },
+            //     {
+            //         employee_name: 'jane',
+            //         employee_age: 33,
+            //         employee_salary: 1000
+            //     }]
+            window.onload = async() => {
+
+                try {
+                    const response = await fetch('http://dummy.restapiexample.com/api/v1/employees')
+                    const responseContent = await response.json()
+                    const employees = responseContent.data
+                    
+
+                    const employeeTable = document.getElementById('employeeTable')
+
+                    // for ( employee of employees) {
+                    //     let row = document.createElement('tr')
+                    //     let cell_name = document.createElement('td')
+                    //     let cell_age = document.createElement('td')
+                    //     let cell_salary = document.createElement('td')
+
+                        
+
+                    //     cell_name.innerHTML = employee['employee_name']
+                    //     cell_age.innerHTML = employee['employee_age']
+                    //     cell_salary.innerHTML = employee['employee_salary']
+
+                    //     row.appendChild(cell_name)
+                    //     row.appendChild(cell_age)
+                    //     row.appendChild(cell_salary)
+                    //     employeeTable.appendChild(row)
+
+                    // }
+
+                    // shorter, teacher's solution
+                    const tableContent = employees.map(e => `
+                        <tr>
+                            <td>${e.employee_name}</td>
+                            <td>${e.employee_age}</td>
+                            <td>${e.employee_salary}</td>
+                        </tr>
+                    `).join('')
+                    employeeTable.innerHTML = tableContent
+                } catch (err) {
+                    console.warn(err)
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <table id="employeeTable"></table>
+    </body>
+</html>

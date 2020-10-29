@@ -13,7 +13,7 @@ app.get('/weather', async (req, res) => {
             if (cityRecord) {
                 res.status(200).json(cityRecord)
             } else {
-                res.status(404).json({ message: 'not found'})
+                res.status(404).json({ message: 'Not found'})
             }
         } else {
             res.status(200).json(responseContent)
@@ -21,7 +21,7 @@ app.get('/weather', async (req, res) => {
         
     } catch (err) {
         console.warn(err)
-        res.status(500).json( { message: 'server error' })
+        res.status(500).json( { message: 'Server error' })
     }
 })
 

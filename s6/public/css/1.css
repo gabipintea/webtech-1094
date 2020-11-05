@@ -1,0 +1,15 @@
+/* p {
+    color: green;
+} */
+
+div>p {
+    color: green;
+}
+
+/* p span {
+    color: blue;
+} */
+
+div>p>span {
+    color: blue;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <style>
+    .done {
+        text-decoration: line-through;
+    }
+  </style>
+  <script>
+    window.onload = () => {
+        var cells = document.querySelectorAll("td:last-child")
+        for (i = 0; i < cells.length; i++) {
+            cells[i].addEventListener('click', function() {
+                this.classList.toggle('done');
+                this.innerHTML = this.innerHTML === 'done'?'not done':'done'
+            });
+        }              
+    }
+
+    // teacher's method
+    // window.onload = () => {
+    //     const cells = document.querySelectorAll('td:last-child')
+    //     cells.forEach(e => {
+    //       e.onclick = () => {
+    //         e.classList.toggle('done')
+    //         e.innerHTML = e.innerHTML === 'done' ? 'not done' : 'done'
+    //       }
+    //     })
+    //   }
+  </script>
+  <body>
+    <table id=t0>
+      <tr>
+        <td>item 1</td><td>not done</td>
+      </tr>
+      <tr> 
+        <td>item 2</td><td>not done</td>
+      </tr>
+    </table>
+  </body>
+</html>

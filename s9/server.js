@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
+const cors = require('cors')
 
 const sequelize = new Sequelize('sequelize_tests', 'root', '', {
     dialect: 'mysql'
@@ -48,6 +49,7 @@ const CrewMember = sequelize.define('crewMember', {
 Ship.hasMany(CrewMember)
 
 const app = express()
+app.use(cors())
 app.use(bodyParser.json())
 
 app.get('/create', async (req, res, next) => {

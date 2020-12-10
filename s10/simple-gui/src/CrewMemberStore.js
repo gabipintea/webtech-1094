@@ -2,15 +2,16 @@ import { EventEmitter } from 'fbemitter'
 
 const SERVER = 'http://localhost:8080'
 
-class ShipStore {
-  constructor () {
+class CrewMemberStore {
+  constructor (shipId) {
+    this.shipId = shipId
     this.data = []
     this.emitter = new EventEmitter()
   }
 
   async getAll () {
     try {
-      const response = await fetch(`${SERVER}/ships`)
+      const response = await fetch(`${SERVER}/ships/${this.shipId}/crew-members`)
       const data = await response.json()
       this.data = data
       this.emitter.emit('GET_ALL_SUCCESS')
@@ -20,14 +21,14 @@ class ShipStore {
     }
   }
 
-  async addOne(ship) {
+  async addOne(crewMember) {
     try {
-      await fetch(`${SERVER}/ships`, {
+      await fetch(`${SERVER}/ships/${this.shipId}/crew-members`, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(ship)
+        body: JSON.stringify(crewMember)
       })
       this.getAll()
     } catch (err) {
@@ -38,7 +39,7 @@ class ShipStore {
 
   async deleteOne(id) {
     try {
-      await fetch(`${SERVER}/ships/${id}`, {
+      await fetch(`${SERVER}/ships/${this.shipId}/crew-members/${id}`, {
         method: 'delete'
       })
       this.getAll()
@@ -48,14 +49,14 @@ class ShipStore {
     }
   }
 
-  async saveOne(id, ship) {
+  async saveOne(id, crewMember) {
     try {
-      await fetch(`${SERVER}/ships/${id}`, {
+      await fetch(`${SERVER}/ships/${this.shipId}/crew-members/${id}`, {
         method: 'put',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(ship)
+        body: JSON.stringify(crewMember)
       })
       this.getAll()
     } catch (err) {
@@ -65,6 +66,4 @@ class ShipStore {
   }
 }
 
-const store = new ShipStore()
-
-export default store
+export default CrewMemberStore

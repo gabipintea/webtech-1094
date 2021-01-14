@@ -1,4 +1,13 @@
 .ship-editor .centered {
-    display: flex;
-    justify-content: center;
-  }
+  display: flex;
+  justify-content: center;
+}
+
+.ship-editor .ops {
+  display: flex;
+  justify-content: center;
+}
+
+.ship-editor .spaced {
+  margin-right: 10px;
+}

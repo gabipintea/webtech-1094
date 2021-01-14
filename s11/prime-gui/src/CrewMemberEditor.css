@@ -1,0 +1,13 @@
+.crew-member-editor .centered {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .crew-member-editor .ops {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .crew-member-editor .spaced {
+    margin-right: 10px;
+  }

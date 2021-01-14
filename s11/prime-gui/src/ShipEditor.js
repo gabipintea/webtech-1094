@@ -6,6 +6,8 @@ import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 
+import { withRouter } from 'react-router-dom'
+
 import './ShipEditor.css'
 
 class ShipEditor extends React.Component {
@@ -15,6 +17,7 @@ class ShipEditor extends React.Component {
     this.state = {
       ships: [],
       isAddDialogShown: false,
+      isNewRecord: true,
       ship: {
         name: '',
         displacement: '',
@@ -30,15 +33,36 @@ class ShipEditor extends React.Component {
 
     this.showDialog = () => {
       this.setState({
-        isAddDialogShown: true
+        isAddDialogShown: true,
+        isNewRecord: true
       })
     }
 
+    this.edit = (rowData) => {
+      this.setState({
+        isAddDialogShown: true,
+        isNewRecord: false,
+        ship: Object.assign({}, rowData)
+      })
+    }
+
+    this.select = (id) => {
+      this.props.history.push(`/ships/${id}`)
+    }
+
     this.save = () => {
-      store.addOne(this.state.ship)
+      if (this.state.isNewRecord) {
+        store.addOne(this.state.ship)
+      } else {
+        store.saveOne(this.state.ship.id, this.state.ship)
+      }
       this.setState({
         isAddDialogShown: false
       })
+    }
+
+    this.delete = (id) => {
+      store.deleteOne(id)
     }
 
     this.handleShipChange = (evt) => {
@@ -60,6 +84,22 @@ class ShipEditor extends React.Component {
         <Button label='Save' icon="pi pi-save" className="p-button-rounded p-button-outlined" onClick={this.save} />
       </div>
     )
+
+    this.opsTemplate = (rowData) => {
+      return (
+        <div className='ops'>
+          <span className='spaced'>
+            <Button icon="pi pi-trash" className="p-button-rounded p-button-outlined p-button-danger" onClick={() => this.delete(rowData.id)} />
+          </span>
+          <span className='spaced'>
+            <Button icon="pi pi-pencil" className="p-button-rounded p-button-outlined p-button-info" onClick={() => this.edit(rowData)} />
+          </span>
+          <span className='spaced'>
+            <Button icon="pi pi-search-plus" className="p-button-rounded p-button-outlined p-button-info" onClick={() => this.select(rowData.id)} />
+          </span>
+        </div>
+      )
+    }
   }
 
   componentDidMount () {
@@ -80,6 +120,7 @@ class ShipEditor extends React.Component {
           <Column header='Name' field='name' />
           <Column header='Port of sail' field='portOfSail' />
           <Column header='Displacement' field='displacement' />
+          <Column body={this.opsTemplate} />
         </DataTable>
         <Dialog   visible={this.state.isAddDialogShown} 
                   onHide={this.hideDialog} 
@@ -104,4 +145,4 @@ class ShipEditor extends React.Component {
   }
 }
 
-export default ShipEditor
+export default withRouter(ShipEditor)
